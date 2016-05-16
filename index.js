@@ -3,6 +3,7 @@ var path = require('path');
 var chokidar = require('chokidar');
 var xtend = require('xtend');
 var anymatch = require('anymatch');
+const anybar = require('anybar');
 
 module.exports = watchify;
 module.exports.args = {
@@ -62,6 +63,7 @@ function watchify (b, opts) {
     reset();
     
     function reset () {
+        anybar('orange');
         var time = null;
         var bytes = 0;
         b.pipeline.get('record').on('end', function () {
@@ -75,6 +77,7 @@ function watchify (b, opts) {
             next();
         }
         function end () {
+            anybar('green');
             var delta = Date.now() - time;
             b.emit('time', delta);
             b.emit('bytes', bytes);
@@ -124,6 +127,7 @@ function watchify (b, opts) {
     }
     
     function invalidate (id) {
+        anybar('yellow');
         if (cache) delete cache[id];
         if (pkgcache) delete pkgcache[id];
         changingDeps[id] = true;
