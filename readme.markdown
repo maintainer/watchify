@@ -1,3 +1,8 @@
+
+
+**Watchify** with [AnyBar](https://github.com/tonsky/AnyBar) integration.
+
+
 # watchify
 
 watch mode for [browserify](https://github.com/substack/node-browserify) builds
