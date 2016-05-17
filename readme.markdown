@@ -1,6 +1,6 @@
 
 
-**Watchify** with [AnyBar](https://github.com/tonsky/AnyBar) integration.
+**Watchify** fork with build start/finish notifications.
 
 
 # watchify
