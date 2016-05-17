@@ -76,10 +76,6 @@ function watchify(b, opts) {
             next();
         }
         function end() {
-            notifier.notify({
-                'title': 'Watchify',
-                'message': 'Build finished.'
-            });
             var delta = Date.now() - time;
             b.emit('time', delta);
             b.emit('bytes', bytes);
@@ -101,9 +97,22 @@ function watchify(b, opts) {
     });
     b.on('bundle', function (bundle) {
         updating = true;
-        bundle.on('error', onend);
+        bundle.on('error', onerr);
         bundle.on('end', onend);
-        function onend() { updating = false }
+        function onend() {
+            notifier.notify({
+                'title': 'Watchify',
+                'message': 'Build succeeded √'
+            });
+            updating = false 
+        }
+        function onerr() { 
+            notifier.notify({
+                'title': 'Watchify',
+                'message': 'Build failed !'
+            });
+            updating = false 
+        }
     });
 
     function watchFile(file, dep) {
@@ -131,7 +140,7 @@ function watchify(b, opts) {
     function invalidate(id) {
         notifier.notify({
             'title': 'Watchify',
-            'message': 'Build started.'
+            'message': 'Build started ...'
         });
         if (cache) delete cache[id];
         if (pkgcache) delete pkgcache[id];
